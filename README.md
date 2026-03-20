@@ -29,7 +29,10 @@ using RimBridgeServer.Annotations;
 
 public sealed class AchtungBridgeTools
 {
-    [Tool("achtung/select_group", Description = "Select an Achtung pawn group by stable id.")]
+    [Tool(
+        "achtung/select_group",
+        Description = "Select an Achtung pawn group by stable id.",
+        ResultDescription = "Whether the group was selected and which stable id was resolved.")]
     [ToolResponse("success", Type = "boolean", Description = "True when the group was resolved and selected.")]
     public object SelectGroup(
         [ToolParameter(Description = "Stable Achtung group id.")] string groupId)
@@ -42,6 +45,20 @@ public sealed class AchtungBridgeTools
     }
 }
 ```
+
+Use `ResultDescription` when you want to describe what a successful result means without documenting every response field. Use `ToolResponseAttribute` when individual response fields are worth surfacing in machine-readable metadata.
+
+## Attention And Async Problems
+
+Extension tools do not currently need to publish GABP attention items directly.
+
+Today, blocking attention is still owned centrally by RimBridgeServer:
+
+- severe async RimWorld log errors can open attention
+- failed or timed-out bridge operations can open attention
+- ordinary extension tools usually do not need to write any attention protocol code
+
+There is not yet a public cross-mod API for third-party mods to publish their own async attention items. If your extension needs that, treat it as future integration work rather than part of the current annotations contract.
 
 ## Build
 

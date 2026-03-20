@@ -37,6 +37,11 @@ public sealed class ToolAttribute : Attribute
     public string? Title { get; set; }
 
     /// <summary>
+    /// Optional human-readable summary of what a successful result means or what useful handle it returns.
+    /// </summary>
+    public string? ResultDescription { get; set; }
+
+    /// <summary>
     /// Indicates whether the tool requires authentication when exposed over a transport that supports auth.
     /// </summary>
     public bool RequiresAuth { get; set; } = true;
