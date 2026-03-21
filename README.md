@@ -1,8 +1,28 @@
 # RimBridgeServer.Annotations
 
-RimBridgeServer.Annotations is a small shared annotation package for `RimBridgeServer`.
+RimBridgeServer.Annotations is a small shared annotation package for products that work like `RimBridgeServer`.
 
-It exists for one job only: let third-party RimWorld mods describe tools with the same attribute model that RimBridgeServer uses, without taking a dependency on the full server runtime.
+## Overview
+
+`RimBridgeServer.Annotations` is not a bridge runtime, not a transport implementation, and not an end-user server product. It is the lightweight annotation contract shared between a bridge host and the external mods or plugins whose tools that host can discover.
+
+For the `1.1.0` release summary and upgrade notes, see [`RELEASE_NOTES.md`](RELEASE_NOTES.md).
+
+This repository exists to keep that shared contract separate from the full bridge/runtime layer:
+
+- a RimBridgeServer-style host can use `Lib.GAB` plus its own product logic to expose the final GABP surface
+- the host itself can use this same attribute model for discoverable tools
+- third-party mods can reference only `RimBridgeServer.Annotations` to describe tools without taking a dependency on the full bridge runtime
+- the host can scan loaded assemblies and republish discovered tools through one bridge surface
+
+If you are building your own version of RimBridgeServer for another game, this is the reason this repo exists: keep the host/runtime dependency in the bridge, and keep the external extension contract small, stable, and metadata-only.
+
+## Who This Is For
+
+Use this package if you are:
+
+- building a bridge host that wants to discover attributed tools from extension assemblies
+- writing a mod or plugin that should contribute tools to such a host without taking a dependency on the full bridge runtime
 
 ## What Is In This Package
 
@@ -18,9 +38,22 @@ Those types are pure metadata. They do not perform discovery, registration, tran
 
 That split is intentional:
 
-- mods depend on a tiny stable package
-- `RimBridgeServer` stays responsible for scanning loaded mod assemblies and turning annotated methods into live bridge capabilities
+- bridge hosts and extension mods share one stable annotation model
+- contributed extensions depend on a tiny package instead of the full bridge/runtime layer
+- `RimBridgeServer` or your own bridge host stays responsible for scanning loaded assemblies and turning annotated methods into live bridge capabilities
 - the shared surface remains cheap to version and cheap to adopt
+
+## How This Fits With Lib.GAB
+
+`Lib.GAB` is the host/runtime layer for teams building a RimBridgeServer-style bridge product.
+
+`RimBridgeServer.Annotations` is the lighter package that can be shared with external mods and plugin assemblies that contribute tools to that host.
+
+That means the responsibilities stay split cleanly:
+
+- `Lib.GAB` handles the host-side GABP server mechanics
+- `RimBridgeServer.Annotations` supplies the shared metadata contract
+- `RimBridgeServer` or your own product owns discovery, trust boundaries, naming rules, and lifecycle management for contributed tools
 
 ## Example
 
@@ -84,4 +117,4 @@ This repository intentionally does not include:
 - RimWorld integration code
 - GABP transport code
 
-Those belong in `RimBridgeServer`, not in the shared annotations package.
+Those belong in `RimBridgeServer` or in your own bridge host product, not in the shared annotations package.

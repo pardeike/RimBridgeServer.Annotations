@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -15,7 +15,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>rimworld;rimbridge;annotations;tools;modding</PackageTags>
-    <Description>Shared tool annotation attributes for RimBridgeServer and third-party RimWorld mods.</Description>
+    <Description>Shared tool annotation attributes for RimBridgeServer-style host products and third-party mods that contribute discoverable tools.</Description>
+    <PackageReleaseNotes>Add optional Tool.ResultDescription metadata so extension tools can describe successful results without requiring field-level response annotations.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
